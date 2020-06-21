@@ -6,15 +6,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 ///this should be the only interface to handle such widgets so that the interface be similar regardless of implementation
 abstract class InformationViewer
 {
-  static showToast({String msg, double fontSize = 16.0,Color backgroundColor, Color textColor})
+  static showToast({@required String msg, double fontSize = 16.0,Color backgroundColor, Color textColor})
   {
     Fluttertoast.showToast(msg: msg,backgroundColor: backgroundColor,textColor: textColor,timeInSecForIos: 3,fontSize: fontSize);
   }
-  static showErrorToast({String msg, double fontSize = 16.0, Color textColor})
+  static showErrorToast({@required String msg, double fontSize = 16.0, Color textColor = Colors.white})
   {
     Fluttertoast.showToast(msg: msg,backgroundColor: Colors.red,textColor: textColor,timeInSecForIos: 3,fontSize: fontSize);
   }
-  static showSuccessToast({String msg, double fontSize = 16.0, Color textColor})
+  static showSuccessToast({@required String msg, double fontSize = 16.0, Color textColor = Colors.white})
   {
     Fluttertoast.showToast(msg: msg,backgroundColor: Colors.green,textColor: textColor,timeInSecForIos: 3,fontSize: fontSize);
   }
