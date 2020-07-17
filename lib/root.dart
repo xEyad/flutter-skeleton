@@ -1,5 +1,5 @@
-import 'package:equity_new_app/views/mainScreen.dart';
-import 'package:equity_new_app/widgets/focusRemover.dart';
+import './views/mainScreen.dart';
+import './widgets/focusRemover.dart';
 import 'package:flutter/material.dart';
 
 class Root extends StatefulWidget 

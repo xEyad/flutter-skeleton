@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:equity_new_app/models/informationViewer.dart';
+import './informationViewer.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,7 +9,6 @@ class Network
   Future<void> setActiveToken(String token) async
   {
     ///most likely you will need to implement this if you are working with decent API
-    //TODO IMPLEMENT setActiveToken() of network class
     _currentToken = token;
   } 
   
@@ -22,7 +21,7 @@ class Network
     }
     catch(e)
     {
-      _noConnectionHandler();
+      _noConnectionHandler(e);
       return http.Response('',noInternetConnectionCode);
     }
   }
@@ -36,7 +35,7 @@ class Network
     }
     catch(e)
     {
-      _noConnectionHandler();
+      _noConnectionHandler(e);
       return http.Response('',noInternetConnectionCode);
     }
   }
@@ -49,7 +48,7 @@ class Network
     }
     catch(e)
     {
-      _noConnectionHandler();
+      _noConnectionHandler(e);
       return http.Response('',noInternetConnectionCode);
     }
   }
@@ -67,15 +66,23 @@ class Network
     }
     throw 'Unknown network error.';
   }
-  void _noConnectionHandler()
+
+  static bool isSuccess(http.Response response)
   {
-    InformationViewer.showErrorToast(msg:'No internet connection',textColor: Colors.white,);    
+    return response.statusCode >= 200 && response.statusCode < 300;
+  }
+
+  void _noConnectionHandler(dynamic e)
+  {
+    //TODO IMPLEMENT _noConnectionHandler() of Network class
+    print('Error in Network class: $e');
+    InformationViewer.showErrorToast(msg:'Error in network: $e',textColor: Colors.white,);
   }
 
   static final int noInternetConnectionCode = 418;
   static String _currentToken;
   static get _headers => {
       HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.acceptHeader:'application/json'
+      HttpHeaders.acceptHeader:'application/json',
       };
 }

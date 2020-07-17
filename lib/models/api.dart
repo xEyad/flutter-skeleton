@@ -1,5 +1,5 @@
-import 'package:equity_new_app/models/network.dart';
-import 'package:equity_new_app/models/operationReply.dart';
+import './network.dart';
+import './operationReply.dart';
 
 
 ///Responsible for communication with api endpoints and transforming Network Responses to entities

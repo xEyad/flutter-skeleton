@@ -1,4 +1,4 @@
-import 'package:equity_new_app/models/network.dart';
+import '../models/network.dart';
 
 ///contain simple functions which are useful in many different scenarios
 class Utility
