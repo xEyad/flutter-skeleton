@@ -21,6 +21,7 @@ dependencies:
   email_validator: ^1.0.4
   material_color_scheme: ^0.0.2
   intl: ^0.16.1
+  firebase_core: ^0.4.3+2
   flutter:
     sdk: flutter
 
@@ -30,7 +31,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  firebase_messaging: ^6.0.13
 flutter_icons:
   ios: true
   android: true

@@ -1,3 +1,5 @@
+import 'package:skeleton/widgets/fcmMessagesHandler.dart';
+
 import './views/mainScreen.dart';
 import './widgets/focusRemover.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,7 @@ class _RootState extends State<Root>
           canvasColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: MainScreen()
+        home: FCMMessageHandler(child: MainScreen()) 
       ),
     );
   }
