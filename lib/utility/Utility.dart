@@ -1,4 +1,4 @@
-import '../models/network.dart';
+part of '../models/operations.dart';
 
 ///contain simple functions which are useful in many different scenarios
 class Utility
@@ -32,7 +32,7 @@ class Utility
   }
   static Future<bool> isURLValid(String url) async
   {
-    var n = Network();
+    var n = _Network();
     if(url==null )
       return false;
 
