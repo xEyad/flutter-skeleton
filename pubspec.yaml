@@ -1,6 +1,8 @@
+#rename the app using this https://stackoverflow.com/questions/49353199/how-to-change-the-app-display-name-build-with-flutter?rq=1
 name: skeleton
 description: A new Flutter project.
 
+# follow this https://semver.org/
 version: 1.0.0+1
 
 environment:
