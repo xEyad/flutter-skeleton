@@ -53,9 +53,9 @@ class _MessageHandlerState extends State<FCMMessageHandler> {
   Widget build(BuildContext context) {
     return widget.child;
   }
+  
+  //TODO: implement this to handle incoming messages
   void _handleMessage(Map<String, dynamic> message) {
-
-    
   }
 
   
