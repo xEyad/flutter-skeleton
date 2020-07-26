@@ -1,5 +1,4 @@
-import 'package:skeleton/widgets/fcmMessagesHandler.dart';
-
+import './widgets/fcmMessagesHandler.dart';
 import './views/mainScreen.dart';
 import './widgets/focusRemover.dart';
 import 'package:flutter/material.dart';
@@ -19,15 +18,17 @@ class _RootState extends State<Root>
   @override
   Widget build(BuildContext context) {
     return FocusRemover(
-      child: MaterialApp(
-        title: 'Equity',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          fontFamily: 'Arial',
-          canvasColor: Colors.white,
+      child: FCMMessageHandler(
+              child: MaterialApp(
+          title: 'Equity',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            fontFamily: 'Arial',
+            canvasColor: Colors.white,
+          ),
+          debugShowCheckedModeBanner: false,
+          home: MainScreen() 
         ),
-        debugShowCheckedModeBanner: false,
-        home: FCMMessageHandler(child: MainScreen()) 
       ),
     );
   }
