@@ -24,7 +24,9 @@ dependencies:
   firebase_core: ^0.4.3+2
   flutter:
     sdk: flutter
-
+  #part of the skeleton
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^0.1.2
 
 
@@ -45,3 +47,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - locales/
+flutter_intl:
+  enabled: true
