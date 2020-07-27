@@ -47,7 +47,8 @@ class _Network
       if(queryParameters!=null)
         url = _parameterizedURL(url,queryParameters);
       print('put request to $url');
-      payload??print('payload$payload');
+      if(payload != null)
+        print('payload: $payload');
       http.Response response = await http.put(url,headers:_headers,body: payload);
       return response;
     }

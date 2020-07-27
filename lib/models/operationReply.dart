@@ -2,16 +2,16 @@
 ///fill the type if you intend to return the reply with data
 class OperationReply <ReturnType>
 {
-  Status status;
+  OperationStatus status;
   String message;
   ReturnType returnData;
   OperationReply(this.status,{this.message="message not set",this.returnData});
   isSucess()
   {
-    return status == Status.success;
+    return status == OperationStatus.success;
   }
 }
-enum Status
+enum OperationStatus
 {  
   success,
   failed,
