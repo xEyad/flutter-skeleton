@@ -3,6 +3,7 @@ import 'dart:io';
 import './informationViewer.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'operationReply.dart';
 
 part 'api.dart';
 part 'network.dart';
