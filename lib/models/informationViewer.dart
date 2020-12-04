@@ -8,14 +8,14 @@ abstract class InformationViewer
 {
   static showToast({@required String msg, double fontSize = 16.0,Color backgroundColor, Color textColor})
   {
-    Fluttertoast.showToast(msg: msg,backgroundColor: backgroundColor,textColor: textColor,timeInSecForIos: 3,fontSize: fontSize);
+    Fluttertoast.showToast(msg: msg,backgroundColor: backgroundColor,textColor: textColor,fontSize: fontSize);
   }
   static showErrorToast({@required String msg, double fontSize = 16.0, Color textColor = Colors.white})
   {
-    Fluttertoast.showToast(msg: msg,backgroundColor: Colors.red,textColor: textColor,timeInSecForIos: 3,fontSize: fontSize);
+    Fluttertoast.showToast(msg: msg,backgroundColor: Colors.red,textColor: textColor,fontSize: fontSize);
   }
   static showSuccessToast({@required String msg, double fontSize = 16.0, Color textColor = Colors.white})
   {
-    Fluttertoast.showToast(msg: msg,backgroundColor: Colors.green,textColor: textColor,timeInSecForIos: 3,fontSize: fontSize);
+    Fluttertoast.showToast(msg: msg,backgroundColor: Colors.green,textColor: textColor,fontSize: fontSize);
   }
 }

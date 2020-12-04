@@ -1,9 +1,11 @@
 library operations;
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'operationReply.dart';
+import 'package:global_configuration/global_configuration.dart';
 
 part 'api.dart';
 part 'network.dart';
