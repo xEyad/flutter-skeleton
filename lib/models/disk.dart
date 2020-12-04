@@ -1,5 +1,4 @@
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+part of 'operations.dart';
 ///Responsible for all I/O on mobile
 class Disk
 {
@@ -12,40 +11,56 @@ class Disk
   {
     return getApplicationDocumentsDirectory();
   }
-  
   ///gets only the first occurence of the key if it is duplicated.
   ///returns null if doesn't exist
   Future<String> getEntry(String key) async
   {
-    if(!await isKeyExists(key))
-      return null;
-    List<String> lines = await _read();    
-    final index = lines.indexWhere((String line) => line.contains(_createKey(key)));
-    return lines[index].replaceAll(_keyPattern, "");
+    return GetStorage().read(key);
   }
   
   Future<bool> deleteAllData() async
   {
-    final directory = await getStorageDirectory();
-    final file = File('${directory.path}/$_storageFileName');
-
-    try{file.delete();}
+    try{
+      GetStorage().erase();
+      print('DELETED ALL DISK DATA!');
+    }
     catch(e){return false;}
 
-    print('DELETED ALL DISK DATA!');
     return true;    
   }
 
+  
+  ///returns null if doesn't exist
+  Future<String> getEntryUnique(DiskKey key) async
+  {
+    return getEntry(key.toString());
+  }
 
-  ///will duplicate the key if it already exists
+  ///depends on enums instead of raw strings
+  Future<bool> saveUnique(DiskKey key,String data) async
+  {
+    return save(key.toString(),data);
+  }
+  ///depends on enums instead of raw strings
+  ///creates key if doesn't exist
+  Future<bool> overwriteUnique(DiskKey key,String data) async
+  {
+    return overwrite(key.toString(),data);
+  }
+  
+  ///depends on enums instead of raw strings
+  Future<bool> isUniqueKeyExists(DiskKey key) async
+  {
+    return isKeyExists(key.toString());
+  }
+
+
+
   Future<bool> save(String key,String data) async 
   {
     try{
-      final directory = await getStorageDirectory();
-      final file = File('${directory.path}/$_storageFileName');
-      final String entry = '${_createKey(key)}$data\n';
-      await file.writeAsString(entry,mode:FileMode.append,flush: true);
-      print('saved key: $key with $data');
+      await GetStorage().write(key, data);
+      print('saved key: $key with value: $data');
       return true;
     }
     catch(e)
@@ -57,28 +72,9 @@ class Disk
   ///creates key if doesn't exist
   Future<bool> overwrite(String key,String newData) async
   {
-    if(!await isKeyExists(key))
-    {
-      await save(key,newData);
-      return true;
-    }
     try{
-      List<String> lines = await _read();
-      final index = lines.indexWhere((String line) => line.contains(_createKey(key)));
-      final entryLine = lines[index];
-      if(index == -1)
-      {
-        await save(key,newData);
-        return true;
-      }
-
-      final lastIndex = entryLine.lastIndexOf(_keyPattern) + _createKey(key).length;
-      lines[index] = entryLine.replaceRange(lastIndex,null,newData);
-      
-      final directory = await getStorageDirectory();
-      final file = File('${directory.path}/$_storageFileName');      
-      await file.writeAsString(lines.join("\n"),mode:FileMode.writeOnly);
-      print('overwrite key: $key with $newData');
+      await GetStorage().write(key,newData);
+      print('overwritten key: $key with value: $newData');
       return true;
     }
     catch(e)
@@ -88,13 +84,8 @@ class Disk
   }
 
   Future<bool> isKeyExists(String key) async
-  {
-    
-    List<String> lines = await _read();
-    if(lines == null)
-      return false;
-    final index = lines.indexWhere((String line) => line.contains(_createKey(key)));
-    return index != -1;
+  {    
+    return GetStorage().getKeys<String>().contains(key);
   }
 
   ///null = error
@@ -122,6 +113,6 @@ class Disk
     return '╞$key╞';
   }
   final String _storageFileName = "eyad-app-data.txt";
-  final RegExp  _keyPattern = new RegExp(r"╞\w*╞");
+  final RegExp  _keyPattern = new RegExp(r"╞.*╞");
   static final  Disk _instance = Disk._default();
 }

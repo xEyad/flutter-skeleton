@@ -3,9 +3,13 @@ part of 'operations.dart';
 ///Responsible for all interactions with internet. All functions return HTTP.Response
 class _Network
 {
-  Future<void> setActiveToken(String token) async
+  _Network()
   {
-    ///most likely you will need to implement this if you are working with decent API
+  }
+
+  Future<void> setActiveToken(String token) async
+  {    
+    await Disk().saveUnique(DiskKey.userPreviousToken, token);
     _currentToken = token;
   } 
   
@@ -16,6 +20,7 @@ class _Network
         url = _parameterizedURL(url,queryParameters);
       print('get request to $url');
       var response = await http.get(url,headers:_headers);
+      log(response.body,name: "Get Request Response",);
       return response;
     }
     catch(e)
@@ -31,7 +36,8 @@ class _Network
       if(queryParameters!=null)
         url = _parameterizedURL(url,queryParameters);
       print('post request to $url\npayload: $payload');
-      var response = await http.post(url,headers:_headers,body: payload);    
+      var response = await http.post(url,headers:_headers,body: payload); 
+      log(response.body,name: "Post Request Response",);
       return response;
     }
     catch(e)
@@ -50,6 +56,7 @@ class _Network
       if(payload != null)
         print('payload: $payload');
       http.Response response = await http.put(url,headers:_headers,body: payload);
+      log(response.body,name: "Put Request Response",);
       return response;
     }
     catch(e)
@@ -71,7 +78,7 @@ class _Network
     catch(e)
     {
       _noConnectionHandler(e);
-      return http.Response('{}',noInternetConnectionCode);
+      return http.Response('',noInternetConnectionCode);
     }
   }
   
@@ -109,8 +116,7 @@ class _Network
 
   void _noConnectionHandler(dynamic e)
   {
-    print('Error in network: $e');
-    InformationViewer.showErrorToast(msg:'Error in network: $e',textColor: Colors.white,);
+    log('',error:'Error in network: $e',name: 'network.dart');
   }
   
   static String _platform()
@@ -125,11 +131,15 @@ class _Network
   
   static final int noInternetConnectionCode = 418;
   static String _currentToken;
-  static get _headers => {
+  static get _headers 
+   {
+     if(_currentToken==null)
+      log('warning: network token is null...',name: 'Network');
+     return {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.acceptHeader:'application/json',
-      HttpHeaders.acceptLanguageHeader:'en',
-      // HttpHeaders.authorizationHeader:'Bearer $_currentToken', //TODO: implement or remove this
-      "Platform":_platform()
+      HttpHeaders.authorizationHeader:'Bearer $_currentToken', 
+      "Platform":_platform(),
       };
+   }
 }
