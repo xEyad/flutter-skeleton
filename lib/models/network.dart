@@ -21,7 +21,7 @@ class _Network
     catch(e)
     {
       _noConnectionHandler(e);
-      return http.Response('',noInternetConnectionCode);
+      return http.Response('{}',noInternetConnectionCode);
     }
   }
   
@@ -37,7 +37,7 @@ class _Network
     catch(e)
     {
       _noConnectionHandler(e);
-      return http.Response('',noInternetConnectionCode);
+      return http.Response('{}',noInternetConnectionCode);
     }
   }
 
@@ -55,7 +55,7 @@ class _Network
     catch(e)
     {
       _noConnectionHandler(e);
-      return http.Response('',noInternetConnectionCode);
+      return http.Response('{}',noInternetConnectionCode);
     }
   }
   
@@ -71,7 +71,7 @@ class _Network
     catch(e)
     {
       _noConnectionHandler(e);
-      return http.Response('',noInternetConnectionCode);
+      return http.Response('{}',noInternetConnectionCode);
     }
   }
   
