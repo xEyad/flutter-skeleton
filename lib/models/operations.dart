@@ -6,6 +6,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'operationReply.dart';
 import 'package:global_configuration/global_configuration.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:package_info_plus/package_info_plus.dart';
 
 part 'api.dart';
 part 'network.dart';
@@ -23,7 +25,7 @@ class Operations
 
   void _initialize() async
   {
-    
+    _packageInfo = await PackageInfo.fromPlatform();
   }
 
   factory Operations()
@@ -33,5 +35,16 @@ class Operations
   
   
   static final Operations _oi = Operations._default();
-  static final _API _api = _API();
+  static final _API _api = _API();  
+  static String get version => _packageInfo.version;
+  static PackageInfo _packageInfo;
+}
+
+enum AppMode{
+  debugWithLiveUrl,
+  debugWithStagingUrl,
+  //release
+  live,
+  //release
+  staging
 }

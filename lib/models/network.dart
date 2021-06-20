@@ -3,9 +3,7 @@ part of 'operations.dart';
 ///Responsible for all interactions with internet. All functions return HTTP.Response
 class _Network
 {
-  _Network()
-  {
-  }
+  _Network();
 
   Future<void> setActiveToken(String token) async
   {    
@@ -30,7 +28,7 @@ class _Network
     }
   }
   
-  Future<http.Response> postRequest(String url,String payload,{Map<String,String> queryParameters}) async
+  Future<http.Response> postRequest(String url,String payload,{Map<String,String> queryParameters,Map<String,String> formValues}) async
   {
     try{
       if(queryParameters!=null)
@@ -44,6 +42,40 @@ class _Network
     {
       _noConnectionHandler(e);
       return http.Response('{}',noInternetConnectionCode);
+    }
+  }
+
+  /// if you want to add files as values in [formValues], user `dio.MultipartFile` object
+  /// [onSendProgress] function takes to inputs `sent` and `total`
+  Future<dio.Response> postRequestMultipart(String url,Map<String,dynamic> formValues,{Map<String,String> queryParameters,Function(int,int) onSendProgress}) async
+  {   
+    try{
+      if(queryParameters!=null)
+        url = _parameterizedURL(url,queryParameters);
+      dio.FormData formData = dio.FormData.fromMap(formValues);
+      print('post request to $url\nPayload: $formValues');
+      var options = dio.Options(headers:_headers);
+      var response =  dio.Dio().post(
+        url,
+        data:formData,
+        options:options,
+        onSendProgress: (sent,total){
+          if(onSendProgress!=null)
+            onSendProgress(sent,total);
+          print('uploading $sent out of $total');
+        }
+        );      
+      return response;
+    }
+    on dio.DioError catch(e)
+    {
+      _noConnectionHandler(e);
+      return e.response;
+    }
+    catch(e)
+    {
+      _noConnectionHandler(e);
+      return dio.Response(statusCode: noInternetConnectionCode);
     }
   }
 
@@ -97,7 +129,7 @@ class _Network
     throw 'Unknown network error.';
   }
   
-  static bool isSuccess(http.Response response)
+  static bool isSuccess(http.BaseResponse response)
   {
     return response.statusCode >= 200 && response.statusCode < 300;
   }
@@ -128,6 +160,7 @@ class _Network
     else
       return "platform-error";
   }
+  
   
   static final int noInternetConnectionCode = 418;
   static String _currentToken;

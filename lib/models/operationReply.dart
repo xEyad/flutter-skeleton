@@ -33,5 +33,7 @@ enum Status
   failed,
   notSet,
   error,
-  connectionDown
+  connectionDown,
+  noMobileNumberFound,
+  userNotVerified,
 }
